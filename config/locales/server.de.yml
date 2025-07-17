@@ -6,7 +6,7 @@
 
 de:
   site_settings:
-    discourse_gamification_enabled: "Discourse-Gamifizierung-Plug-in aktivieren"
+    community_gamification_enabled: "Discourse-Gamifizierung-Plug-in aktivieren"
     like_received_score_value: "Der Wert des Beifalls, der vergeben wird, wenn ein Benutzer ein „Gefällt mir“ erhält"
     like_given_score_value: "Der Wert des Beifalls, der für jedes „Gefällt mir“ vergeben wird, das ein Benutzer gibt"
     solution_score_value: "Der Wert des Beifalls, der vergeben wird, wenn der Beitrag eines Benutzers als Lösung markiert wird"

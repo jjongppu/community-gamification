@@ -9,7 +9,7 @@ ja:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discourse ゲーミフィケーション"
+          community_gamification: "Discourse ゲーミフィケーション"
   js:
     gamification_score: "拍手"
     gamification:

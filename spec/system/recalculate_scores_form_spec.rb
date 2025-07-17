@@ -8,8 +8,8 @@ describe "Recalculate Scores Form", type: :system do
 
   before do
     RateLimiter.enable
-    SiteSetting.discourse_gamification_enabled = true
-    DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+    SiteSetting.community_gamification_enabled = true
+    CommunityGamification::LeaderboardCachedView.new(leaderboard).create
     sign_in(admin)
   end
 
@@ -65,7 +65,7 @@ describe "Recalculate Scores Form", type: :system do
 
   context "when admin does not have daily recalculation remaining" do
     it "disables the 'apply' button" do
-      5.times { DiscourseGamification::RecalculateScoresRateLimiter.perform! }
+      5.times { CommunityGamification::RecalculateScoresRateLimiter.perform! }
 
       visit("/admin/plugins/gamification")
       find(".leaderboard-admin__btn-recalculate").click

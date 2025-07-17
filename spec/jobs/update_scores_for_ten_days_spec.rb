@@ -23,14 +23,14 @@ describe Jobs::UpdateScoresForTenDays do
   end
 
   it "updates all scores within the last 10 days" do
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(0)
     run_job
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user.id).score).to eq(5)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(5)
   end
 
   it "does not update scores outside of the last 10 days" do
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
     run_job
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
   end
 end

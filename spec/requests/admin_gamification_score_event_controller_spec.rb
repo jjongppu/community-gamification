@@ -2,36 +2,36 @@
 
 require "rails_helper"
 
-RSpec.describe DiscourseGamification::AdminGamificationScoreEventController do
+RSpec.describe CommunityGamification::AdminGamificationScoreEventController do
   let(:current_user) { Fabricate(:admin) }
   let(:another_user) { Fabricate(:user) }
   let(:score_events) { [] }
 
   before do
-    SiteSetting.discourse_gamification_enabled = true
+    SiteSetting.community_gamification_enabled = true
 
-    score_events << DiscourseGamification::GamificationScoreEvent.create!(
+    score_events << CommunityGamification::GamificationScoreEvent.create!(
       user_id: current_user.id,
       date: Date.today,
       points: 7,
       reason: "post_created",
     )
 
-    score_events << DiscourseGamification::GamificationScoreEvent.create!(
+    score_events << CommunityGamification::GamificationScoreEvent.create!(
       user_id: current_user.id,
       date: Date.yesterday,
       points: 17,
       reason: "post_created",
     )
 
-    score_events << DiscourseGamification::GamificationScoreEvent.create!(
+    score_events << CommunityGamification::GamificationScoreEvent.create!(
       user_id: another_user.id,
       date: Date.yesterday,
       points: 27,
       reason: "post_created",
     )
 
-    DiscourseGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
+    CommunityGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
     sign_in(current_user)
   end
 
@@ -80,9 +80,9 @@ RSpec.describe DiscourseGamification::AdminGamificationScoreEventController do
            }
       expect(response.status).to eq(200)
 
-      DiscourseGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
+      CommunityGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
       user_score =
-        DiscourseGamification::GamificationScore.where(user_id: another_user.id).sum(:score)
+        CommunityGamification::GamificationScore.where(user_id: another_user.id).sum(:score)
       expect(user_score).to eq(37)
     end
 
@@ -97,10 +97,10 @@ RSpec.describe DiscourseGamification::AdminGamificationScoreEventController do
           }
       expect(response.status).to eq(200)
 
-      DiscourseGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
+      CommunityGamification::GamificationScore.calculate_scores(since_date: 10.days.ago.midnight)
 
       user_score =
-        DiscourseGamification::GamificationScore.where(user_id: another_user.id).sum(:score)
+        CommunityGamification::GamificationScore.where(user_id: another_user.id).sum(:score)
       expect(user_score).to eq(13)
     end
   end

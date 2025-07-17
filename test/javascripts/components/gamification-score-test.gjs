@@ -4,7 +4,7 @@ import { setupRenderingTest } from "discourse/tests/helpers/component-test";
 import GamificationScore from "../discourse/components/gamification-score";
 
 module(
-  "Discourse Gamification | Component | gamification-score",
+  "Community Gamification | Component | gamification-score",
   function (hooks) {
     setupRenderingTest(hooks);
 

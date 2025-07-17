@@ -6,7 +6,7 @@ import {
   pluginApiIdentifiers,
   selectKitOptions,
 } from "select-kit/components/select-kit";
-import { LEADERBOARD_PERIODS } from "discourse/plugins/discourse-gamification/discourse/components/gamification-leaderboard";
+import { LEADERBOARD_PERIODS } from "discourse/plugins/community-gamification/discourse/components/gamification-leaderboard";
 
 @selectKitOptions({
   filterable: true,

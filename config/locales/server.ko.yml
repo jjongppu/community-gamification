@@ -6,7 +6,7 @@
 
 ko:
   site_settings:
-    discourse_gamification_enabled: "디스코스 게이미피케이션 플러그인 활성화"
+    community_gamification_enabled: "디스코스 게이미피케이션 플러그인 활성화"
     like_received_score_value: "사용자가 좋아요를 받으면 부여되는 포인트 값"
     like_given_score_value: "사용자가 좋아요를 할 때마다 부여되는 포인트 값"
     solution_score_value: "사용자의 게시물이 해결책으로 선택되면 부여되는 포인트 값"

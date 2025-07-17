@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ::DiscourseGamification do
+describe ::CommunityGamification do
   let(:user) { Fabricate(:user) }
   let!(:gamification_score) { Fabricate(:gamification_score, user_id: user.id) }
 
@@ -13,7 +13,7 @@ describe ::DiscourseGamification do
   end
 
   context "with leaderboard positions" do
-    before { SiteSetting.discourse_gamification_enabled = true }
+    before { SiteSetting.community_gamification_enabled = true }
 
     it "enqueues job to regenerate leaderboard positions for score ranking strategy changes" do
       expect do SiteSetting.score_ranking_strategy = "row_number" end.to change {
@@ -23,7 +23,7 @@ describe ::DiscourseGamification do
   end
 end
 
-describe ::DiscourseGamification do
+describe ::CommunityGamification do
   let(:guardian) { Guardian.new }
   let!(:default_gamification_leaderboard) { Fabricate(:gamification_leaderboard) }
 
@@ -43,19 +43,19 @@ context "when merging users" do
   fab!(:leaderboard) { Fabricate(:gamification_leaderboard) }
 
   before do
-    SiteSetting.discourse_gamification_enabled = true
-    DiscourseGamification::LeaderboardCachedView.create_all
+    SiteSetting.community_gamification_enabled = true
+    CommunityGamification::LeaderboardCachedView.create_all
     Fabricate.times(1, :topic, user: user_1)
     Fabricate.times(1, :topic, user: user_2)
-    DiscourseGamification::GamificationScore.calculate_scores
-    DiscourseGamification::LeaderboardCachedView.refresh_all
+    CommunityGamification::GamificationScore.calculate_scores
+    CommunityGamification::LeaderboardCachedView.refresh_all
   end
 
   it "sums the scores" do
     expect(user_2.gamification_score).to eq(5)
 
     UserMerger.new(user_1, user_2, Discourse.system_user).merge!
-    DiscourseGamification::LeaderboardCachedView.refresh_all
+    CommunityGamification::LeaderboardCachedView.refresh_all
 
     expect(user_2.gamification_score).to eq(10)
   end

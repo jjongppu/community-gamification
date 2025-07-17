@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe DiscourseGamification::LeaderboardCachedView do
+describe CommunityGamification::LeaderboardCachedView do
   fab!(:admin)
   fab!(:user)
   fab!(:other_user) { Fabricate(:user) }
@@ -11,7 +11,7 @@ describe DiscourseGamification::LeaderboardCachedView do
   fab!(:gamification_score) { Fabricate(:gamification_score, user_id: user.id, date: 8.days.ago) }
 
   let(:mviews) do
-    DiscourseGamification::GamificationLeaderboard.periods.map do |period, _|
+    CommunityGamification::GamificationLeaderboard.periods.map do |period, _|
       "gamification_leaderboard_cache_#{leaderboard.id}_#{period}"
     end
   end
@@ -127,7 +127,7 @@ describe DiscourseGamification::LeaderboardCachedView do
 
       it "raises NotReadyError" do
         expect { leaderboard_positions.scores(period: "all_time") }.to raise_error(
-          DiscourseGamification::LeaderboardCachedView::NotReadyError,
+          CommunityGamification::LeaderboardCachedView::NotReadyError,
         )
       end
     end

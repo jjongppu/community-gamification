@@ -6,7 +6,7 @@
 
 es:
   site_settings:
-    discourse_gamification_enabled: "Activar el plugin Discourse Gamification"
+    community_gamification_enabled: "Activar el plugin Community Gamification"
     like_received_score_value: "Puntos otorgados al autor de una publicación que reciba un «me gusta»"
     like_given_score_value: "Puntos otorgados por cada me gusta que un usuario da"
     solution_score_value: "Puntos otorgados cuando la publicación de un usuario es marcada como la solución"

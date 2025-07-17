@@ -1,5 +1,5 @@
-discourse_gamification:
-  discourse_gamification_enabled:
+community_gamification:
+  community_gamification_enabled:
     default: false
     client: true
 

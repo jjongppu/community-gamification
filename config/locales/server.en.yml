@@ -1,6 +1,6 @@
 en:
   site_settings:
-    discourse_gamification_enabled: "Enable the Discourse Gamification Plugin"
+    community_gamification_enabled: "Enable the Community Gamification Plugin"
     like_received_score_value: "The value of the point awarded when a user receives a like"
     like_given_score_value: "The value of the point awarded for every like a user gives"
     solution_score_value: "The value of the point awarded when a user's post is marked as a solution"

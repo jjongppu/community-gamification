@@ -3,7 +3,7 @@
 module Jobs
   class UpdateStaleLeaderboardPositions < ::Jobs::Base
     def execute(args = nil)
-      DiscourseGamification::LeaderboardCachedView.update_all
+      CommunityGamification::LeaderboardCachedView.update_all
     end
   end
 end

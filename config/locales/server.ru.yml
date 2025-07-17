@@ -6,7 +6,7 @@
 
 ru:
   site_settings:
-    discourse_gamification_enabled: "Включить плагин геймификации"
+    community_gamification_enabled: "Включить плагин геймификации"
     like_received_score_value: "Баллы, начисляемые за получение симпатии"
     like_given_score_value: "Баллы, начисляемые за выражение симпатии"
     solution_score_value: "Баллы, начисляемые за сообщение, получившее статус 'Вопрос решён'"

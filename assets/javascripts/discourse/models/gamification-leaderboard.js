@@ -1,6 +1,6 @@
 import { tracked } from "@glimmer/tracking";
 import { i18n } from "discourse-i18n";
-import { LEADERBOARD_PERIODS } from "discourse/plugins/discourse-gamification/discourse/components/gamification-leaderboard";
+import { LEADERBOARD_PERIODS } from "discourse/plugins/community-gamification/discourse/components/gamification-leaderboard";
 
 export default class GamificationLeaderboard {
   static create(args = {}) {

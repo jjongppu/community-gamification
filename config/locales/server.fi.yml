@@ -6,7 +6,7 @@
 
 fi:
   site_settings:
-    discourse_gamification_enabled: "Ota Discourse Gamification -lisäosa käyttöön"
+    community_gamification_enabled: "Ota Community Gamification -lisäosa käyttöön"
     like_received_score_value: "Annetun hurrauksen arvo, kun käyttäjä saa tykkäyksen"
     like_given_score_value: "Annetun hurrauksen arvo jokaisesta käyttäjän antamasta tykkäyksestä"
     solution_score_value: "Annetun hurrauksen arvo, kun käyttäjän viesti merkitään ratkaisuksi"

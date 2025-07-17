@@ -9,7 +9,7 @@ he:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discourse משחוק"
+          community_gamification: "Discourse משחוק"
   js:
     gamification_score: "תשועות"
     gamification:
