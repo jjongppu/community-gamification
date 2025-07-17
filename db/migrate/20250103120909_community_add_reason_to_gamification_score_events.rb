@@ -2,6 +2,8 @@
 
 class CommunityAddReasonToGamificationScoreEvents < ActiveRecord::Migration[7.0]
   def up
+    return if column_exists?(:gamification_score_events, :reason)
+
     # 1. Add the column as nullable with a default empty string
     add_column :gamification_score_events, :reason, :string, default: "", null: true
 
@@ -17,6 +19,6 @@ class CommunityAddReasonToGamificationScoreEvents < ActiveRecord::Migration[7.0]
   end
 
   def down
-    remove_column :gamification_score_events, :reason
+    remove_column :gamification_score_events, :reason if column_exists?(:gamification_score_events, :reason)
   end
 end
