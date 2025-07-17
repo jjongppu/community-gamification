@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe DiscourseGamification::DirectoryIntegration do
+describe CommunityGamification::DirectoryIntegration do
   fab!(:user_1) { Fabricate(:admin) }
   fab!(:user_2) { Fabricate(:user) }
   fab!(:leaderboard) { Fabricate(:gamification_leaderboard) }
@@ -12,7 +12,7 @@ describe DiscourseGamification::DirectoryIntegration do
   fab!(:score_4) { Fabricate(:gamification_score, user_id: user_2.id, score: 5, date: 2.days.ago) }
 
   before do
-    SiteSetting.discourse_gamification_enabled = true
+    SiteSetting.community_gamification_enabled = true
     DirectoryItem.refresh!
   end
 
@@ -52,8 +52,8 @@ describe DiscourseGamification::DirectoryIntegration do
       end
 
       it "returns sum of points earned between leaderboard's 'from_date' and 'to_date'" do
-        expect(DiscourseGamification::GamificationScore.where(user: user_1).sum(:score)).to eq(50)
-        expect(DiscourseGamification::GamificationScore.where(user: user_2).sum(:score)).to eq(30)
+        expect(CommunityGamification::GamificationScore.where(user: user_1).sum(:score)).to eq(50)
+        expect(CommunityGamification::GamificationScore.where(user: user_2).sum(:score)).to eq(30)
 
         expect(all_time_score_for(user_1)).to eq(40)
         expect(all_time_score_for(user_2)).to eq(25)
@@ -63,8 +63,8 @@ describe DiscourseGamification::DirectoryIntegration do
 
   context "without a date-restricted default leaderboard" do
     it "returns sum of all scores for the period" do
-      expect(DiscourseGamification::GamificationScore.where(user: user_1).sum(:score)).to eq(50)
-      expect(DiscourseGamification::GamificationScore.where(user: user_2).sum(:score)).to eq(30)
+      expect(CommunityGamification::GamificationScore.where(user: user_1).sum(:score)).to eq(50)
+      expect(CommunityGamification::GamificationScore.where(user: user_2).sum(:score)).to eq(30)
 
       expect(all_time_score_for(user_1)).to eq(50)
       expect(all_time_score_for(user_2)).to eq(30)

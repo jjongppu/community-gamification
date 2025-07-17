@@ -5,7 +5,7 @@ require "rails_helper"
 describe Jobs::DeleteLeaderboardPositions do
   fab!(:leaderboard) { Fabricate(:gamification_leaderboard) }
   fab!(:score) { Fabricate(:gamification_score, user_id: leaderboard.created_by_id) }
-  let(:leaderboard_positions) { DiscourseGamification::LeaderboardCachedView.new(leaderboard) }
+  let(:leaderboard_positions) { CommunityGamification::LeaderboardCachedView.new(leaderboard) }
 
   before { leaderboard_positions.create }
 
@@ -15,7 +15,7 @@ describe Jobs::DeleteLeaderboardPositions do
     described_class.new.execute(leaderboard_id: leaderboard.id)
 
     expect { leaderboard_positions.scores }.to raise_error(
-      DiscourseGamification::LeaderboardCachedView::NotReadyError,
+      CommunityGamification::LeaderboardCachedView::NotReadyError,
     )
   end
 
@@ -27,7 +27,7 @@ describe Jobs::DeleteLeaderboardPositions do
     described_class.new.execute(leaderboard_id: leaderboard.id)
 
     expect { leaderboard_positions.scores }.to raise_error(
-      DiscourseGamification::LeaderboardCachedView::NotReadyError,
+      CommunityGamification::LeaderboardCachedView::NotReadyError,
     )
   end
 end

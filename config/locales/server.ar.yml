@@ -6,7 +6,7 @@
 
 ar:
   site_settings:
-    discourse_gamification_enabled: "تفعيل المكوِّن الإضافي لتلعيب Discourse"
+    community_gamification_enabled: "تفعيل المكوِّن الإضافي لتلعيب Discourse"
     like_received_score_value: "قيمة الهتافات الممنوح عند تلقي المستخدم إعجابًا"
     like_given_score_value: "قيمة الهتافات الممنوح لكل إعجاب يمنحه المستخدم"
     solution_score_value: "قيمة الهتافات الممنوح عند وضع علامة على منشور المستخدم كحل"

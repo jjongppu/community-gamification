@@ -9,7 +9,7 @@ fi:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discoursen Pelillistäminen"
+          community_gamification: "Discoursen Pelillistäminen"
   js:
     gamification_score: "Hurraukset"
     gamification:

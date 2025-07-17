@@ -6,7 +6,7 @@
 
 sv:
   site_settings:
-    discourse_gamification_enabled: "Aktivera insticksprogrammet Discourse Gamification"
+    community_gamification_enabled: "Aktivera insticksprogrammet Community Gamification"
     like_received_score_value: "Värdet på hurrarop som tilldelas när en användare får en gillning"
     like_given_score_value: "Värdet på hurrarop som tilldelas för varje gillning en användare ger"
     solution_score_value: "Värdet på hurrarop som tilldelas när en användares inlägg markeras som en lösning"

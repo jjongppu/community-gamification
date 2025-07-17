@@ -9,7 +9,7 @@ hu:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discourse Gamifikáció"
+          community_gamification: "Discourse Gamifikáció"
   js:
     gamification_score: "Pontok"
     gamification:

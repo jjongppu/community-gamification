@@ -3,7 +3,7 @@ import { ajax } from "discourse/lib/ajax";
 import I18n from "I18n";
 
 export default {
-  name: "discourse-gamification-check-in",
+  name: "community-gamification-check-in",
   initialize() {
     withPluginApi("1.2.0", (api) => {
       if (!api.getCurrentUser()) {

@@ -9,7 +9,7 @@ zh_CN:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discourse Gamification"
+          community_gamification: "Community Gamification"
   js:
     gamification_score: "点数"
     gamification:

@@ -6,7 +6,7 @@
 
 hu:
   site_settings:
-    discourse_gamification_enabled: "Engedélyezze a Discourse Gamifikáció beépülő modult"
+    community_gamification_enabled: "Engedélyezze a Discourse Gamifikáció beépülő modult"
     like_received_score_value: "Pontszám értéke, amelyet akkor kap a felhasználó, ha egy like-ot kap."
     like_given_score_value: "Pontszám értéke, amelyet a felhasználó minden egyes like-ért kap."
     solution_score_value: "Pontszám értéke, amikor egy felhasználó bejegyzését megoldásnak jelölik meg"

@@ -5,7 +5,7 @@ import pretender, { response } from "discourse/tests/helpers/create-pretender";
 import MinimalGamificationLeaderboard from "../discourse/components/minimal-gamification-leaderboard";
 
 module(
-  "Discourse Gamification | Component | minimal-gamification-leaderboard",
+  "Community Gamification | Component | minimal-gamification-leaderboard",
   function (hooks) {
     setupRenderingTest(hooks);
 

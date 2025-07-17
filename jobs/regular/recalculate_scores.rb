@@ -6,7 +6,7 @@ module Jobs
       user_id = args[:user_id]
       raise Discourse::InvalidParameters.new(:user_id) if user_id.blank?
 
-      DiscourseGamification::GamificationScore.calculate_scores(
+      CommunityGamification::GamificationScore.calculate_scores(
         since_date: args[:since] || 10.days.ago,
       )
 
@@ -14,7 +14,7 @@ module Jobs
                            {
                              success: true,
                              remaining:
-                               DiscourseGamification::RecalculateScoresRateLimiter.remaining,
+                               CommunityGamification::RecalculateScoresRateLimiter.remaining,
                              user_id: [user_id],
                            }
     end

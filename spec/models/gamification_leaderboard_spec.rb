@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DiscourseGamification::GamificationLeaderboard, type: :model do
+RSpec.describe CommunityGamification::GamificationLeaderboard, type: :model do
   fab!(:leaderboard) { Fabricate(:gamification_leaderboard) }
 
   describe ".resolve_period" do

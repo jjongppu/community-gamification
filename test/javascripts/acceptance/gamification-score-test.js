@@ -6,7 +6,7 @@ import { fixturesByUrl } from "discourse/tests/helpers/create-pretender";
 import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 
 acceptance(
-  "Discourse Gamification | User Card | Show Gamification Score",
+  "Community Gamification | User Card | Show Gamification Score",
   function (needs) {
     needs.user();
     needs.pretender((server, helper) => {
@@ -28,7 +28,7 @@ acceptance(
 );
 
 acceptance(
-  "Discourse Gamification | User Metadata | Show Gamification Score",
+  "Community Gamification | User Metadata | Show Gamification Score",
   function (needs) {
     needs.user();
     needs.pretender((server, helper) => {

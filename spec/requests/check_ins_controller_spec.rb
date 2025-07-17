@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe DiscourseGamification::CheckInsController do
+RSpec.describe CommunityGamification::CheckInsController do
   fab!(:user)
 
-  before { SiteSetting.discourse_gamification_enabled = true }
+  before { SiteSetting.community_gamification_enabled = true }
 
   it "awards points once per day" do
     sign_in(user)
@@ -32,13 +32,13 @@ RSpec.describe DiscourseGamification::CheckInsController do
     freeze_time Date.parse("2022-01-01") do
       post "/gamification/check-in.json"
       expect(response.parsed_body["points"]).to eq(20)
-      expect(DiscourseGamification::GamificationScoreEvent.last.description).to eq("주말출석")
+      expect(CommunityGamification::GamificationScoreEvent.last.description).to eq("주말출석")
     end
 
     freeze_time Date.parse("2022-01-03") do
       post "/gamification/check-in.json"
       expect(response.parsed_body["points"]).to eq(10)
-      expect(DiscourseGamification::GamificationScoreEvent.last.description).to eq("출석")
+      expect(CommunityGamification::GamificationScoreEvent.last.description).to eq("출석")
     end
   end
 end

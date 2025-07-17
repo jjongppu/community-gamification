@@ -8,7 +8,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import { AUTO_GROUPS } from "discourse/lib/constants";
 import { i18n } from "discourse-i18n";
 import GroupChooser from "select-kit/components/group-chooser";
-import PeriodInput from "discourse/plugins/discourse-gamification/discourse/components/period-input";
+import PeriodInput from "discourse/plugins/community-gamification/discourse/components/period-input";
 
 export default class AdminEditLeaderboard extends Component {
   @service currentUser;
@@ -50,7 +50,7 @@ export default class AdminEditLeaderboard extends Component {
         },
       });
       await this.router.transitionTo(
-        "adminPlugins.show.discourse-gamification-leaderboards.index"
+        "adminPlugins.show.community-gamification-leaderboards.index"
       );
 
       // To refresh the list of leaderboards in the index.
@@ -62,7 +62,7 @@ export default class AdminEditLeaderboard extends Component {
 
   <template>
     <BackButton
-      @route="adminPlugins.show.discourse-gamification-leaderboards"
+      @route="adminPlugins.show.community-gamification-leaderboards"
       @label="gamification.back"
     />
     <Form

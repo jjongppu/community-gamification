@@ -6,7 +6,7 @@
 
 cs:
   site_settings:
-    discourse_gamification_enabled: "Povolit plugin Discourse Gamification"
+    community_gamification_enabled: "Povolit plugin Community Gamification"
     like_received_score_value: "Hodnota ovace udělené, když uživatel obdrží Líbí se"
     like_given_score_value: "Hodnota ovace za každé Líbí se, které uživatel udělí"
     solution_score_value: "Hodnota ovace udělené, když je příspěvek uživatele označen jako řešení"

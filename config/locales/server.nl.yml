@@ -6,7 +6,7 @@
 
 nl:
   site_settings:
-    discourse_gamification_enabled: "Schakel de Discourse-gamificatie-plug-in"
+    community_gamification_enabled: "Schakel de Discourse-gamificatie-plug-in"
     like_received_score_value: "De waarde van de aanmoediging die wordt toegekend wanneer een gebruiker een like ontvangt"
     like_given_score_value: "De waarde van de aanmoediging die wordt toegekend voor elke like die een gebruiker geeft"
     solution_score_value: "De waarde van de aanmoediging die wordt toegekend wanneer een bericht van een gebruiker wordt gemarkeerd als oplossing"

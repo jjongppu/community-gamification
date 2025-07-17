@@ -6,7 +6,7 @@
 
 tr_TR:
   site_settings:
-    discourse_gamification_enabled: "Discourse Oyunlaştırma Eklentisini Etkinleştirin"
+    community_gamification_enabled: "Discourse Oyunlaştırma Eklentisini Etkinleştirin"
     like_received_score_value: "Bir kullanıcı bir beğeni aldığında verilen tezahüratın değeri"
     like_given_score_value: "Bir kullanıcının verdiği her beğeni için verilen tezahüratın değeri"
     solution_score_value: "Bir kullanıcının gönderisi çözüm olarak işaretlendiğinde verilen tezahüratın değeri"

@@ -9,7 +9,7 @@ describe Jobs::RecalculateScores do
 
   it "publishes MessageBus and executes job" do
     since = 10.days.ago
-    DiscourseGamification::GamificationScore.expects(:calculate_scores).with(since_date: since)
+    CommunityGamification::GamificationScore.expects(:calculate_scores).with(since_date: since)
 
     MessageBus
       .expects(:publish)
