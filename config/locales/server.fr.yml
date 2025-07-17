@@ -6,7 +6,7 @@
 
 fr:
   site_settings:
-    discourse_gamification_enabled: "Activer l'extension Discourse Gamification"
+    community_gamification_enabled: "Activer l'extension Community Gamification"
     like_received_score_value: "La valeur de l'acclamation accordée lorsqu'un utilisateur reçoit une mention J'aime"
     like_given_score_value: "La valeur de l'acclamation accordée pour chaque mention « J'aime » donnée par un utilisateur"
     solution_score_value: "La valeur de l'acclamation accordée lorsque le message d'un utilisateur est marqué comme une solution"

@@ -4,7 +4,7 @@ import { setupRenderingTest } from "discourse/tests/helpers/component-test";
 import GamificationLeaderboardRow from "../discourse/components/gamification-leaderboard-row";
 
 module(
-  "Discourse Gamification | Component | gamification-leaderboard-row",
+  "Community Gamification | Component | gamification-leaderboard-row",
   function (hooks) {
     setupRenderingTest(hooks);
 

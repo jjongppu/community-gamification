@@ -11,7 +11,7 @@ class LeaderboardViewSerializer < ApplicationSerializer
   end
 
   def users
-    DiscourseGamification::GamificationLeaderboard.scores_for(
+    CommunityGamification::GamificationLeaderboard.scores_for(
       object[:leaderboard].id,
       page: object[:page],
       period: object[:period],
@@ -23,7 +23,7 @@ class LeaderboardViewSerializer < ApplicationSerializer
     return {} if object[:for_user_id].blank?
 
     user_score =
-      DiscourseGamification::GamificationLeaderboard.scores_for(
+      CommunityGamification::GamificationLeaderboard.scores_for(
         object[:leaderboard].id,
         for_user_id: object[:for_user_id],
         period: object[:period],

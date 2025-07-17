@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe DiscourseGamification::AdminGamificationLeaderboardController do
+RSpec.describe CommunityGamification::AdminGamificationLeaderboardController do
   fab!(:admin)
 
   before do
-    SiteSetting.discourse_gamification_enabled = true
+    SiteSetting.community_gamification_enabled = true
     sign_in(admin)
   end
 
@@ -18,7 +18,7 @@ RSpec.describe DiscourseGamification::AdminGamificationLeaderboardController do
                name: "Test",
                created_by_id: admin.id,
              }
-      end.to change { DiscourseGamification::GamificationLeaderboard.count }.by(1)
+      end.to change { CommunityGamification::GamificationLeaderboard.count }.by(1)
 
       expect(response.status).to eq(200)
       expect(response.parsed_body).to include("name" => "Test", "created_by_id" => admin.id)

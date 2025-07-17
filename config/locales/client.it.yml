@@ -9,7 +9,7 @@ it:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Discourse Gamification"
+          community_gamification: "Community Gamification"
   js:
     gamification_score: "Complimenti"
     gamification:

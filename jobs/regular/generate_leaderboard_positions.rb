@@ -10,10 +10,10 @@ module Jobs
         "gamification_generate_leaderboard_positions_#{leaderboard_id}",
         validity: 5.minutes,
       ) do
-        leaderboard = DiscourseGamification::GamificationLeaderboard.find_by(id: leaderboard_id)
+        leaderboard = CommunityGamification::GamificationLeaderboard.find_by(id: leaderboard_id)
         return unless leaderboard
 
-        DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+        CommunityGamification::LeaderboardCachedView.new(leaderboard).create
       end
     end
   end

@@ -46,7 +46,7 @@ export default class AdminCreateLeaderboard extends Component {
       });
       this.args.onCancel();
       this.router.transitionTo(
-        "adminPlugins.show.discourse-gamification-leaderboards.show",
+        "adminPlugins.show.community-gamification-leaderboards.show",
         leaderboard.id
       );
     } catch (err) {

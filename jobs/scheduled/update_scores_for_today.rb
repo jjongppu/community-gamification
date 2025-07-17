@@ -5,11 +5,11 @@ module Jobs
     every 1.hour
 
     def execute(args = nil)
-      DiscourseGamification::GamificationScore.calculate_scores
+      CommunityGamification::GamificationScore.calculate_scores
 
-      DiscourseGamification::LeaderboardCachedView.purge_all_stale
-      DiscourseGamification::LeaderboardCachedView.refresh_all
-      DiscourseGamification::LeaderboardCachedView.create_all
+      CommunityGamification::LeaderboardCachedView.purge_all_stale
+      CommunityGamification::LeaderboardCachedView.refresh_all
+      CommunityGamification::LeaderboardCachedView.create_all
     end
   end
 end

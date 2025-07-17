@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DiscourseGamification::GamificationLeaderboardController do
+RSpec.describe CommunityGamification::GamificationLeaderboardController do
   let(:group) { Fabricate(:group) }
   let(:current_user) { Fabricate(:user, group_ids: [group.id]) }
   let(:user_2) { Fabricate(:user) }
@@ -49,14 +49,14 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
   end
 
   before do
-    SiteSetting.discourse_gamification_enabled = true
-    DiscourseGamification::GamificationScore.calculate_scores(since_date: 10.days.ago)
+    SiteSetting.community_gamification_enabled = true
+    CommunityGamification::GamificationScore.calculate_scores(since_date: 10.days.ago)
     sign_in(current_user)
   end
 
   describe "#respond" do
     it "returns users and their calculated scores" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
       get "/leaderboard/#{leaderboard.id}.json"
       expect(response.status).to eq(200)
@@ -77,7 +77,7 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
     end
 
     it "only returns users and scores for specified date range" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard_2).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard_2).create
       get "/leaderboard/#{leaderboard_2.id}.json"
 
       expect(response.status).to eq(200)
@@ -89,7 +89,7 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
     end
 
     it "respects the user_limit parameter" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
       get "/leaderboard/#{leaderboard.id}.json?user_limit=1"
       expect(response.status).to eq(200)
@@ -100,12 +100,12 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
 
     it "only returns users that are a part of a group within included_groups_ids" do
       # multiple scores present
-      expect(DiscourseGamification::GamificationScore.all.map(&:user_id)).to include(
+      expect(CommunityGamification::GamificationScore.all.map(&:user_id)).to include(
         current_user.id,
         user_2.id,
       )
 
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard_with_group).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
       get "/leaderboard/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(200)
@@ -117,11 +117,11 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
 
     it "excludes staged and anon users" do
       # prove score for staged/anon user exists
-      expect(DiscourseGamification::GamificationScore.all.map(&:user_id)).to include(
+      expect(CommunityGamification::GamificationScore.all.map(&:user_id)).to include(
         staged_user.id,
         anon_user.id,
       )
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
       get "/leaderboard/#{leaderboard.id}.json"
       data = response.parsed_body
@@ -129,7 +129,7 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
     end
 
     it "does not error if visible_to_groups_ids or included_groups_ids are empty" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard).create
       get "/leaderboard/#{leaderboard.id}.json"
       expect(response.status).to eq(200)
     end
@@ -141,7 +141,7 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
     end
 
     it "displays leaderboard to users included in group within visible_to_groups_ids" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard_with_group).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
       get "/leaderboard/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(200)
@@ -149,7 +149,7 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
 
     it "allows admins to see all leaderboards" do
       current_user = Fabricate(:admin)
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard_with_group).create
+      CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
       sign_in(current_user)
       get "/leaderboard/#{leaderboard_with_group.id}.json"
@@ -157,8 +157,8 @@ RSpec.describe DiscourseGamification::GamificationLeaderboardController do
     end
 
     it "displays leaderboard for the default leaderboard period" do
-      DiscourseGamification::LeaderboardCachedView.new(leaderboard).create
-      DiscourseGamification::LeaderboardCachedView.new(
+      CommunityGamification::LeaderboardCachedView.new(leaderboard).create
+      CommunityGamification::LeaderboardCachedView.new(
         leaderboard_with_default_period_set_to_daily,
       ).create
 

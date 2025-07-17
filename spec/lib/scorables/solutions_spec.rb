@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DiscourseGamification::Solutions do
+RSpec.describe CommunityGamification::Solutions do
   fab!(:category)
   fab!(:topic) { Fabricate(:topic, category: category) }
   fab!(:question_user) { Fabricate(:user) }

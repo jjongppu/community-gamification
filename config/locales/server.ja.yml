@@ -6,7 +6,7 @@
 
 ja:
   site_settings:
-    discourse_gamification_enabled: "Discourse Gamification プラグインを有効にする"
+    community_gamification_enabled: "Community Gamification プラグインを有効にする"
     like_received_score_value: "ユーザーが「いいね！」を受け取った時に付与される拍手の値"
     like_given_score_value: "ユーザーが与える「いいね！」ごとに付与される拍手の値"
     solution_score_value: "ユーザーの投稿が解決策としてマークされたときに付与される拍手の値"

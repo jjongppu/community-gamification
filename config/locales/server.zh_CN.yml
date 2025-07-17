@@ -6,7 +6,7 @@
 
 zh_CN:
   site_settings:
-    discourse_gamification_enabled: "启用 Discourse 游戏化插件"
+    community_gamification_enabled: "启用 Discourse 游戏化插件"
     like_received_score_value: "当用户收到点赞时所获得的点数"
     like_given_score_value: "用户每给出一个点赞时所获得的点数"
     solution_score_value: "当用户的帖子被标记为解决方案时获得的点数"

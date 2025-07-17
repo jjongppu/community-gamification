@@ -9,7 +9,7 @@ fr:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Gamification de Discourse"
+          community_gamification: "Gamification de Discourse"
   js:
     gamification_score: "Acclamations"
     gamification:

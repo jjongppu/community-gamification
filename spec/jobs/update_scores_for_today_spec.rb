@@ -15,8 +15,8 @@ describe Jobs::UpdateScoresForToday do
 
   fab!(:leaderboard_1) { Fabricate(:gamification_leaderboard, created_by_id: user.id) }
   fab!(:leaderboard_2) { Fabricate(:gamification_leaderboard, created_by_id: user.id) }
-  let(:leaderboard_1_positions) { DiscourseGamification::LeaderboardCachedView.new(leaderboard_1) }
-  let(:leaderboard_2_positions) { DiscourseGamification::LeaderboardCachedView.new(leaderboard_2) }
+  let(:leaderboard_1_positions) { CommunityGamification::LeaderboardCachedView.new(leaderboard_1) }
+  let(:leaderboard_2_positions) { CommunityGamification::LeaderboardCachedView.new(leaderboard_2) }
 
   def run_job
     described_class.new.execute
@@ -25,25 +25,25 @@ describe Jobs::UpdateScoresForToday do
   before { topic_user_2_created.update(created_at: 2.days.ago) }
 
   it "updates all scores for today" do
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(0)
     run_job
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user.id).score).to eq(12)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(12)
   end
 
   it "does not update scores outside of today" do
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
     run_job
-    expect(DiscourseGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
+    expect(CommunityGamification::GamificationScore.find_by(user_id: user_2.id).score).to eq(0)
   end
 
   context "with leaderboard positions" do
     it "generates new leaderboard positions" do
       ActiveRecord::Base.transaction do
         expect { leaderboard_1_positions.scores }.to raise_error(
-          DiscourseGamification::LeaderboardCachedView::NotReadyError,
+          CommunityGamification::LeaderboardCachedView::NotReadyError,
         )
         expect { leaderboard_2_positions.scores }.to raise_error(
-          DiscourseGamification::LeaderboardCachedView::NotReadyError,
+          CommunityGamification::LeaderboardCachedView::NotReadyError,
         )
       end
 
@@ -72,8 +72,8 @@ describe Jobs::UpdateScoresForToday do
 
     it "refreshes leaderboard positions" do
       # Force assignment of scores accrued
-      DiscourseGamification::GamificationScore.calculate_scores
-      DiscourseGamification::LeaderboardCachedView.create_all
+      CommunityGamification::GamificationScore.calculate_scores
+      CommunityGamification::LeaderboardCachedView.create_all
 
       expect(leaderboard_1_positions.scores.map(&:attributes)).to include(
         {
@@ -119,10 +119,10 @@ describe Jobs::UpdateScoresForToday do
     end
 
     it "purges stale leaderboard positions" do
-      DiscourseGamification::LeaderboardCachedView.create_all
+      CommunityGamification::LeaderboardCachedView.create_all
 
       # Update query to make existing materialized views stale
-      allow_any_instance_of(DiscourseGamification::LeaderboardCachedView).to receive(
+      allow_any_instance_of(CommunityGamification::LeaderboardCachedView).to receive(
         :total_scores_query,
       ).and_wrap_original do |original_method, period|
         "#{original_method.call(period)} \n-- This is a new comment"

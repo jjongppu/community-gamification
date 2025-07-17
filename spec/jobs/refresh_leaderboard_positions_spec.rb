@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe Jobs::RefreshLeaderboardPositions do
   fab!(:leaderboard) { Fabricate(:gamification_leaderboard) }
-  let(:leaderboard_positions) { DiscourseGamification::LeaderboardCachedView.new(leaderboard) }
+  let(:leaderboard_positions) { CommunityGamification::LeaderboardCachedView.new(leaderboard) }
 
   before { leaderboard_positions.create }
 

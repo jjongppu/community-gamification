@@ -9,11 +9,11 @@ RSpec.shared_examples "Scorable Type" do
 
   describe "#{described_class} updates gamification score" do
     it "has correct total score" do
-      DiscourseGamification::GamificationScore.calculate_scores(
+      CommunityGamification::GamificationScore.calculate_scores(
         since_date: "2022-1-1",
         only_subclass: described_class,
       )
-      DiscourseGamification::LeaderboardCachedView.create_all
+      CommunityGamification::LeaderboardCachedView.create_all
 
       expect(current_user.gamification_score).to eq(expected_score)
     end
@@ -32,21 +32,21 @@ RSpec.shared_examples "Category Scoped Scorable Type" do
   describe "updates gamification score" do
     let!(:create_score) { class_action_fabricator }
     let!(:trigger_after_create_hook) { after_create_hook }
-    before { DiscourseGamification::LeaderboardCachedView.create_all }
+    before { CommunityGamification::LeaderboardCachedView.create_all }
 
     it "#{described_class} updates scores for action in the category configured" do
       expect(user.gamification_score).to eq(0)
       SiteSetting.scorable_categories = category_allowed.id.to_s
-      DiscourseGamification::GamificationScore.calculate_scores(only_subclass: described_class)
-      DiscourseGamification::LeaderboardCachedView.refresh_all
+      CommunityGamification::GamificationScore.calculate_scores(only_subclass: described_class)
+      CommunityGamification::LeaderboardCachedView.refresh_all
       expect(user.gamification_score).to eq(expected_score)
     end
 
     it "#{described_class} doesn't updates scores for action in the category configured" do
       expect(user_2.gamification_score).to eq(0)
       SiteSetting.scorable_categories = category_not_allowed.id.to_s
-      DiscourseGamification::GamificationScore.calculate_scores(only_subclass: described_class)
-      DiscourseGamification::LeaderboardCachedView.refresh_all
+      CommunityGamification::GamificationScore.calculate_scores(only_subclass: described_class)
+      CommunityGamification::LeaderboardCachedView.refresh_all
       expect(user_2.gamification_score).to eq(0)
     end
   end
@@ -70,18 +70,18 @@ RSpec.shared_examples "No Score Value" do
     let!(:trigger_after_create_hook) { after_create_hook }
 
     it "does not increase user gamification score" do
-      DiscourseGamification::GamificationScore.calculate_scores(
+      CommunityGamification::GamificationScore.calculate_scores(
         since_date: "2022-1-1",
         only_subclass: described_class,
       )
-      DiscourseGamification::LeaderboardCachedView.create_all
+      CommunityGamification::LeaderboardCachedView.create_all
 
       expect(current_user.gamification_score).to eq(0)
     end
   end
 end
 
-RSpec.describe ::DiscourseGamification::LikeReceived do
+RSpec.describe ::CommunityGamification::LikeReceived do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(10, :post, user: current_user)
@@ -118,7 +118,7 @@ RSpec.describe ::DiscourseGamification::LikeReceived do
   end
 end
 
-RSpec.describe ::DiscourseGamification::LikeGiven do
+RSpec.describe ::CommunityGamification::LikeGiven do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(10, :post, user: other_user)
@@ -161,7 +161,7 @@ RSpec.describe ::DiscourseGamification::LikeGiven do
   end
 end
 
-RSpec.describe ::DiscourseGamification::PostCreated do
+RSpec.describe ::CommunityGamification::PostCreated do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(2, :post, user: current_user, post_number: 2)
@@ -212,7 +212,7 @@ RSpec.describe ::DiscourseGamification::PostCreated do
   end
 end
 
-RSpec.describe ::DiscourseGamification::DayVisited do
+RSpec.describe ::CommunityGamification::DayVisited do
   it_behaves_like "Scorable Type" do
     before do
       (Date.new(2022, 01, 01)..Date.new(2022, 01, 30)).each do |date|
@@ -233,19 +233,19 @@ RSpec.describe ::DiscourseGamification::DayVisited do
       UserVisit.create(user_id: user.id, visited_at: date)
     end
 
-    DiscourseGamification::GamificationScore.calculate_scores(
+    CommunityGamification::GamificationScore.calculate_scores(
       since_date: "2022-1-1",
       only_subclass: described_class,
     )
 
-    DiscourseGamification::LeaderboardCachedView.create_all
+    CommunityGamification::LeaderboardCachedView.create_all
 
     # Weekend days are Jan 1 (Sat) and Jan 2 (Sun)
     expect(user.gamification_score).to eq(20 * 2 + 1 * 5)
   end
 end
 
-RSpec.describe ::DiscourseGamification::PostRead do
+RSpec.describe ::CommunityGamification::PostRead do
   it_behaves_like "Scorable Type" do
     before do
       (Date.new(2022, 01, 01)..Date.new(2022, 01, 30)).each do |date|
@@ -258,7 +258,7 @@ RSpec.describe ::DiscourseGamification::PostRead do
   end
 end
 
-RSpec.describe ::DiscourseGamification::TimeRead do
+RSpec.describe ::CommunityGamification::TimeRead do
   it_behaves_like "Scorable Type" do
     before do
       (Date.new(2022, 01, 01)..Date.new(2022, 01, 30)).each do |date|
@@ -271,7 +271,7 @@ RSpec.describe ::DiscourseGamification::TimeRead do
   end
 end
 
-RSpec.describe ::DiscourseGamification::FlagCreated do
+RSpec.describe ::CommunityGamification::FlagCreated do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(10, :reviewable, created_by: current_user) do
@@ -284,7 +284,7 @@ RSpec.describe ::DiscourseGamification::FlagCreated do
   end
 end
 
-RSpec.describe ::DiscourseGamification::TopicCreated do
+RSpec.describe ::CommunityGamification::TopicCreated do
   it_behaves_like "Scorable Type" do
     before { Fabricate.times(10, :topic, user: current_user) }
 
@@ -307,7 +307,7 @@ RSpec.describe ::DiscourseGamification::TopicCreated do
   end
 end
 
-RSpec.describe ::DiscourseGamification::UserInvited do
+RSpec.describe ::CommunityGamification::UserInvited do
   it_behaves_like "Scorable Type" do
     before do
       stub_request(
@@ -330,7 +330,7 @@ RSpec.describe ::DiscourseGamification::UserInvited do
   end
 end
 
-RSpec.describe ::DiscourseGamification::ChatReactionReceived do
+RSpec.describe ::CommunityGamification::ChatReactionReceived do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(10, :chat_message, user: current_user)
@@ -356,7 +356,7 @@ RSpec.describe ::DiscourseGamification::ChatReactionReceived do
   end
 end
 
-RSpec.describe ::DiscourseGamification::ChatReactionGiven do
+RSpec.describe ::CommunityGamification::ChatReactionGiven do
   it_behaves_like "Scorable Type" do
     before do
       Fabricate.times(10, :chat_message, user: other_user)
@@ -388,7 +388,7 @@ RSpec.describe ::DiscourseGamification::ChatReactionGiven do
   end
 end
 
-RSpec.describe ::DiscourseGamification::ChatMessageCreated do
+RSpec.describe ::CommunityGamification::ChatMessageCreated do
   it_behaves_like "Scorable Type" do
     before { Fabricate.times(10, :chat_message, user: current_user) }
 

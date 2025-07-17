@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-# name: discourse-gamification
+# name: community-gamification
 # about: Allows admins to create and customize community scoring contests for user accomplishments with leaderboards.
 # meta_topic_id: 225916
 # version: 0.0.1
 # authors: Discourse
-# url: https://github.com/discourse/discourse-gamification
+# url: https://github.com/discourse/community-gamification
 # required_version: 2.7.0
 
-enabled_site_setting :discourse_gamification_enabled
+enabled_site_setting :community_gamification_enabled
 
 register_asset "stylesheets/common/leaderboard.scss"
 register_asset "stylesheets/desktop/leaderboard.scss", :desktop
@@ -22,8 +22,8 @@ register_asset "stylesheets/common/gamification-level.scss"
 register_svg_icon "crown"
 register_svg_icon "award"
 
-module ::DiscourseGamification
-  PLUGIN_NAME = "discourse-gamification"
+module ::CommunityGamification
+  PLUGIN_NAME = "community-gamification"
 
   def self.category_allowed?(category_id, category_list)
     list = category_list.to_s.split("|").map(&:to_i)
@@ -31,13 +31,13 @@ module ::DiscourseGamification
   end
 end
 
-require_relative "lib/discourse_gamification/engine"
+require_relative "lib/community_gamification/engine"
 
 after_initialize do
-  # route: /admin/plugins/discourse-gamification
+  # route: /admin/plugins/community-gamification
   add_admin_route(
     "gamification.admin.title",
-    "discourse-gamification",
+    "community-gamification",
     { use_new_show_route: true },
   )
 
@@ -49,67 +49,67 @@ after_initialize do
   require_relative "jobs/regular/delete_leaderboard_positions"
   require_relative "jobs/regular/update_stale_leaderboard_positions"
   require_relative "jobs/regular/regenerate_leaderboard_positions"
-  require_relative "lib/discourse_gamification/directory_integration"
-  require_relative "lib/discourse_gamification/guardian_extension"
-  require_relative "lib/discourse_gamification/scorables/scorable"
-  require_relative "lib/discourse_gamification/scorables/day_visited"
-  require_relative "lib/discourse_gamification/scorables/flag_created"
-  require_relative "lib/discourse_gamification/scorables/like_given"
-  require_relative "lib/discourse_gamification/scorables/like_received"
-  require_relative "lib/discourse_gamification/scorables/post_created"
-  require_relative "lib/discourse_gamification/scorables/first_reply_of_day"
-  require_relative "lib/discourse_gamification/scorables/post_read"
-  require_relative "lib/discourse_gamification/scorables/solutions"
-  require_relative "lib/discourse_gamification/scorables/solution_topic"
-  require_relative "lib/discourse_gamification/scorables/time_read"
-  require_relative "lib/discourse_gamification/scorables/topic_created"
-  require_relative "lib/discourse_gamification/scorables/user_invited"
-  require_relative "lib/discourse_gamification/user_extension"
-  require_relative "lib/discourse_gamification/scorables/reaction_given"
-  require_relative "lib/discourse_gamification/scorables/reaction_received"
-  require_relative "lib/discourse_gamification/scorables/chat_reaction_given"
-  require_relative "lib/discourse_gamification/scorables/chat_reaction_received"
-  require_relative "lib/discourse_gamification/scorables/chat_message_created"
-  require_relative "lib/discourse_gamification/recalculate_scores_rate_limiter"
-  require_relative "lib/discourse_gamification/leaderboard_cached_view"
-  require_relative "lib/discourse_gamification/first_login_rewarder"
-  require_relative "lib/discourse_gamification/user_level_serializer_extension"
+  require_relative "lib/community_gamification/directory_integration"
+  require_relative "lib/community_gamification/guardian_extension"
+  require_relative "lib/community_gamification/scorables/scorable"
+  require_relative "lib/community_gamification/scorables/day_visited"
+  require_relative "lib/community_gamification/scorables/flag_created"
+  require_relative "lib/community_gamification/scorables/like_given"
+  require_relative "lib/community_gamification/scorables/like_received"
+  require_relative "lib/community_gamification/scorables/post_created"
+  require_relative "lib/community_gamification/scorables/first_reply_of_day"
+  require_relative "lib/community_gamification/scorables/post_read"
+  require_relative "lib/community_gamification/scorables/solutions"
+  require_relative "lib/community_gamification/scorables/solution_topic"
+  require_relative "lib/community_gamification/scorables/time_read"
+  require_relative "lib/community_gamification/scorables/topic_created"
+  require_relative "lib/community_gamification/scorables/user_invited"
+  require_relative "lib/community_gamification/user_extension"
+  require_relative "lib/community_gamification/scorables/reaction_given"
+  require_relative "lib/community_gamification/scorables/reaction_received"
+  require_relative "lib/community_gamification/scorables/chat_reaction_given"
+  require_relative "lib/community_gamification/scorables/chat_reaction_received"
+  require_relative "lib/community_gamification/scorables/chat_message_created"
+  require_relative "lib/community_gamification/recalculate_scores_rate_limiter"
+  require_relative "lib/community_gamification/leaderboard_cached_view"
+  require_relative "lib/community_gamification/first_login_rewarder"
+  require_relative "lib/community_gamification/user_level_serializer_extension"
 
-  require_dependency 'discourse_gamification/level_helper'
+  require_dependency 'community_gamification/level_helper'
 
   begin
-    DiscourseGamification::UserLevelSerializerExtension.register!
+    CommunityGamification::UserLevelSerializerExtension.register!
   rescue => e
     Rails.logger.error("Gamification Serializer Registration Error: #{e.message}")
   end
 
   reloadable_patch do |plugin|
-    User.prepend(DiscourseGamification::UserExtension)
-    Guardian.include(DiscourseGamification::GuardianExtension)
+    User.prepend(CommunityGamification::UserExtension)
+    Guardian.include(CommunityGamification::GuardianExtension)
   end
 
   if respond_to?(:add_directory_column)
     add_directory_column(
       "gamification_score",
-      query: DiscourseGamification::DirectoryIntegration.query,
+      query: CommunityGamification::DirectoryIntegration.query,
     )
   end
 
   add_to_serializer(
     :admin_plugin,
     :extras,
-    include_condition: -> { self.name == "discourse-gamification" },
+    include_condition: -> { self.name == "community-gamification" },
   ) do
     {
       gamification_recalculate_scores_remaining:
-        DiscourseGamification::RecalculateScoresRateLimiter.remaining,
+        CommunityGamification::RecalculateScoresRateLimiter.remaining,
       gamification_groups:
         Group
           .includes(:flair_upload)
           .all
           .map { |group| BasicGroupSerializer.new(group, root: false, scope: self.scope).as_json },
       gamification_leaderboards:
-        DiscourseGamification::GamificationLeaderboard.all.map do |leaderboard|
+        CommunityGamification::GamificationLeaderboard.all.map do |leaderboard|
           LeaderboardSerializer.new(leaderboard, root: false).as_json
         end,
     }
@@ -118,7 +118,7 @@ after_initialize do
   add_to_serializer(:user_card, :gamification_score) { object.gamification_score }
 
   add_to_serializer(:site, :default_gamification_leaderboard_id) do
-    DiscourseGamification::GamificationLeaderboard.first&.id
+    CommunityGamification::GamificationLeaderboard.first&.id
   end
 
   # 1. 기본 유저 serializer 확장 (Post)
@@ -142,7 +142,7 @@ after_initialize do
   
       if id
         Rails.logger.warn("[🎯 basic_user] id 존재함: #{id}")
-        progress = DiscourseGamification::LevelHelper.progress_for(id)
+        progress = CommunityGamification::LevelHelper.progress_for(id)
         Rails.logger.warn("[🎯 basic_user] progress=#{progress.inspect}")
         progress
       else
@@ -160,7 +160,7 @@ after_initialize do
       id = object.user&.id
       if id
         Rails.logger.warn("[💚 post] id 존재함: #{id}")
-        DiscourseGamification::LevelHelper.progress_for(id)
+        CommunityGamification::LevelHelper.progress_for(id)
       else
         nil
       end
@@ -179,7 +179,7 @@ after_initialize do
   # 2. 현재 로그인한 사용자 serializer 확장
   add_to_serializer(:user, :gamification_level_info, include_condition: -> { true }) do
     begin
-      DiscourseGamification::LevelHelper.progress_for(object.id)
+      CommunityGamification::LevelHelper.progress_for(object.id)
     rescue => e
       Rails.logger.error("Gamification Level Error (:user): #{e.message}")
       nil
@@ -196,7 +196,7 @@ after_initialize do
 
   add_to_serializer(:user_card, :gamification_level_info) do
     begin
-      DiscourseGamification::LevelHelper.progress_for(object.id)
+      CommunityGamification::LevelHelper.progress_for(object.id)
     rescue => e
       Rails.logger.error("Gamification Level Error (:user_card): #{e.message}")
       nil
@@ -205,7 +205,7 @@ after_initialize do
   
   SeedFu.fixture_paths << Rails
     .root
-    .join("plugins", "discourse-gamification", "db", "fixtures")
+    .join("plugins", "community-gamification", "db", "fixtures")
     .to_s
 
   on(:site_setting_changed) do |name|
@@ -215,11 +215,11 @@ after_initialize do
   end
 
   on(:merging_users) do |source_user, target_user|
-    DiscourseGamification::GamificationScore.merge_scores(source_user, target_user)
+    CommunityGamification::GamificationScore.merge_scores(source_user, target_user)
   end
 
   on(:user_logged_in) do |user|
-    DiscourseGamification::FirstLoginRewarder.new(user).call
+    CommunityGamification::FirstLoginRewarder.new(user).call
   end
 
   on(:post_created) do |post, opts, user|
@@ -229,9 +229,9 @@ after_initialize do
     category_id = post.topic.category_id
 
     if post.post_number == 1
-      if DiscourseGamification::TopicCreated.enabled? &&
-           DiscourseGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
-        DiscourseGamification::GamificationScoreEvent.record!(
+      if CommunityGamification::TopicCreated.enabled? &&
+           CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
+        CommunityGamification::GamificationScoreEvent.record!(
           user_id: user.id,
           date: post.created_at.to_date,
           points: SiteSetting.topic_created_score_value,
@@ -243,14 +243,14 @@ after_initialize do
       end
     else
       if SiteSetting.score_first_reply_of_day_enabled
-        already_exists = DiscourseGamification::GamificationScoreEvent.exists?(
+        already_exists = CommunityGamification::GamificationScoreEvent.exists?(
           user_id: user.id,
           date: post.created_at.to_date,
           reason: "daily_first_reply"
         )
 
         if !already_exists
-          DiscourseGamification::GamificationScoreEvent.record!(
+          CommunityGamification::GamificationScoreEvent.record!(
             user_id: user.id,
             date: post.created_at.to_date,
             points: SiteSetting.first_reply_of_day_score_value,
@@ -265,8 +265,8 @@ after_initialize do
 
     if post.post_number == 1 &&
          SiteSetting.post_created_event_score_value.to_i > 0 &&
-         DiscourseGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
-      DiscourseGamification::GamificationScoreEvent.record!(
+         CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: user.id,
         date: post.created_at.to_date,
         points: SiteSetting.post_created_event_score_value,
@@ -282,20 +282,20 @@ after_initialize do
   on(:post_action_created) do |post_action|
     next unless post_action.post_action_type_id == PostActionType.types[:like]
 
-    if DiscourseGamification::LikeGiven.enabled?
-      DiscourseGamification::GamificationScoreEvent.record!(
+    if CommunityGamification::LikeGiven.enabled?
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post_action.user_id,
         date: post_action.created_at.to_date,
-        points: DiscourseGamification::LikeGiven.score_multiplier,
+        points: CommunityGamification::LikeGiven.score_multiplier,
         reason: "like_given"
       )
     end
 
-    if DiscourseGamification::LikeReceived.enabled?
-      DiscourseGamification::GamificationScoreEvent.record!(
+    if CommunityGamification::LikeReceived.enabled?
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post_action.post.user_id,
         date: post_action.created_at.to_date,
-        points: DiscourseGamification::LikeReceived.score_multiplier,
+        points: CommunityGamification::LikeReceived.score_multiplier,
         reason: "like_received"
       )
     end
@@ -304,20 +304,20 @@ after_initialize do
   on(:post_action_destroyed) do |post_action, undone|
     next unless post_action.post_action_type_id == PostActionType.types[:like]
 
-    if DiscourseGamification::LikeGiven.enabled?
-      DiscourseGamification::GamificationScoreEvent.record!(
+    if CommunityGamification::LikeGiven.enabled?
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post_action.user_id,
         date: post_action.created_at.to_date,
-        points: -DiscourseGamification::LikeGiven.score_multiplier,
+        points: -CommunityGamification::LikeGiven.score_multiplier,
         reason: "like_removed"
       )
     end
 
-    if DiscourseGamification::LikeReceived.enabled?
-      DiscourseGamification::GamificationScoreEvent.record!(
+    if CommunityGamification::LikeReceived.enabled?
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post_action.post.user_id,
         date: post_action.created_at.to_date,
-        points: -DiscourseGamification::LikeReceived.score_multiplier,
+        points: -CommunityGamification::LikeReceived.score_multiplier,
         reason: "like_removed"
       )
     end
@@ -327,8 +327,8 @@ after_initialize do
     category_id = post.topic.category_id
 
     if SiteSetting.accepted_solution_event_score_value.to_i > 0 &&
-         DiscourseGamification.category_allowed?(category_id, SiteSetting.accepted_solution_event_categories)
-      DiscourseGamification::GamificationScoreEvent.record!(
+         CommunityGamification.category_allowed?(category_id, SiteSetting.accepted_solution_event_categories)
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post.user_id,
         date: Time.zone.now.to_date,
         points: SiteSetting.accepted_solution_event_score_value,
@@ -340,8 +340,8 @@ after_initialize do
     end
 
     if SiteSetting.accepted_solution_topic_event_score_value.to_i > 0 &&
-         DiscourseGamification.category_allowed?(category_id, SiteSetting.accepted_solution_topic_event_categories)
-      DiscourseGamification::GamificationScoreEvent.record!(
+         CommunityGamification.category_allowed?(category_id, SiteSetting.accepted_solution_topic_event_categories)
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post.topic.user_id,
         date: Time.zone.now.to_date,
         points: SiteSetting.accepted_solution_topic_event_score_value,
@@ -357,8 +357,8 @@ after_initialize do
     category_id = post.topic.category_id
 
     if SiteSetting.accepted_solution_event_score_value.to_i > 0 &&
-         DiscourseGamification.category_allowed?(category_id, SiteSetting.accepted_solution_event_categories)
-      DiscourseGamification::GamificationScoreEvent.record!(
+         CommunityGamification.category_allowed?(category_id, SiteSetting.accepted_solution_event_categories)
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post.user_id,
         date: Time.zone.now.to_date,
         points: -SiteSetting.accepted_solution_event_score_value,
@@ -370,8 +370,8 @@ after_initialize do
     end
 
     if SiteSetting.accepted_solution_topic_event_score_value.to_i > 0 &&
-         DiscourseGamification.category_allowed?(category_id, SiteSetting.accepted_solution_topic_event_categories)
-      DiscourseGamification::GamificationScoreEvent.record!(
+         CommunityGamification.category_allowed?(category_id, SiteSetting.accepted_solution_topic_event_categories)
+      CommunityGamification::GamificationScoreEvent.record!(
         user_id: post.topic.user_id,
         date: Time.zone.now.to_date,
         points: -SiteSetting.accepted_solution_topic_event_score_value,

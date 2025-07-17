@@ -9,7 +9,7 @@ ru:
     admin:
       site_settings:
         categories:
-          discourse_gamification: "Плагин Discourse «Геймификация»"
+          community_gamification: "Плагин Discourse «Геймификация»"
   js:
     gamification_score: "Репутация"
     gamification:
