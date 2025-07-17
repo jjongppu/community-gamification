@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddReasonToGamificationScoreEvents < ActiveRecord::Migration[7.0]
+class CommunityAddReasonToGamificationScoreEvents < ActiveRecord::Migration[7.0]
   def up
     # 1. Add the column as nullable with a default empty string
     add_column :gamification_score_events, :reason, :string, default: "", null: true

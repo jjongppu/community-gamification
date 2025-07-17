@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddPeriodFilterDisabledToLeaderboards < ActiveRecord::Migration[7.2]
+class CommunityAddPeriodFilterDisabledToLeaderboards < ActiveRecord::Migration[7.2]
   def change
     add_column :gamification_leaderboards,
                :period_filter_disabled,

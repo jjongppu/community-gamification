@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DropVersionedLeaderboardMaterializedViews < ActiveRecord::Migration[7.2]
+class CommunityDropVersionedLeaderboardMaterializedViews < ActiveRecord::Migration[7.2]
   def up
     versioned_mviews_query = <<~SQL
       SELECT cls.relname
