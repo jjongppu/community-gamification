@@ -2,16 +2,20 @@
 
 class CommunityCreateGamificationScoreEvents < ActiveRecord::Migration[7.0]
   def change
-    create_table :gamification_score_events do |t|
-      t.integer :user_id, null: false
-      t.date :date, null: false
-      t.integer :points, null: false
-      t.text :description, null: true
+    unless table_exists?(:gamification_score_events)
+      create_table :gamification_score_events do |t|
+        t.integer :user_id, null: false
+        t.date :date, null: false
+        t.integer :points, null: false
+        t.text :description, null: true
 
-      t.timestamps
+        t.timestamps
+      end
     end
 
-    add_index :gamification_score_events, %i[user_id date], unique: false
-    add_index :gamification_score_events, %i[date], unique: false
+    unless index_exists?(:gamification_score_events, %i[user_id date])
+      add_index :gamification_score_events, %i[user_id date], unique: false
+    end
+    add_index :gamification_score_events, %i[date], unique: false unless index_exists?(:gamification_score_events, %i[date])
   end
 end

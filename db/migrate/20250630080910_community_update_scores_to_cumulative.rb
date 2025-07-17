@@ -2,7 +2,9 @@
 
 class CommunityUpdateScoresToCumulative < ActiveRecord::Migration[7.0]
   def up
-    remove_index :gamification_scores, [:user_id, :date]
+    return if index_exists?(:gamification_scores, :user_id, unique: true)
+
+    remove_index :gamification_scores, [:user_id, :date] if index_exists?(:gamification_scores, [:user_id, :date])
 
     if column_exists?(:gamification_scores, :created_at)
       execute <<~SQL
@@ -44,7 +46,11 @@ class CommunityUpdateScoresToCumulative < ActiveRecord::Migration[7.0]
   end
 
   def down
-    remove_index :gamification_scores, :user_id
-    add_index :gamification_scores, [:user_id, :date], unique: true
+    if index_exists?(:gamification_scores, :user_id, unique: true)
+      remove_index :gamification_scores, :user_id
+    end
+    unless index_exists?(:gamification_scores, [:user_id, :date])
+      add_index :gamification_scores, [:user_id, :date], unique: true
+    end
   end
 end
