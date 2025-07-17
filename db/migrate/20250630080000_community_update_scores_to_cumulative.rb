@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateScoresToCumulative < ActiveRecord::Migration[7.0]
+class CommunityUpdateScoresToCumulative < ActiveRecord::Migration[7.0]
   def up
     remove_index :gamification_scores, [:user_id, :date]
 

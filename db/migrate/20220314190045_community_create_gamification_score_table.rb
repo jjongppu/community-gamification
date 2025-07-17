@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class CreateGamificationScoreTable < ActiveRecord::Migration[6.1]
+class CommunityCreateGamificationScoreTable < ActiveRecord::Migration[6.1]
   def change
     create_table :gamification_scores do |t|
       t.integer :user_id, null: false
