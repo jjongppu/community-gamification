@@ -52,7 +52,7 @@ community_gamification:
     default: 10
     client: true
   day_visited_score_value:
-    default: 1
+    default: 10
     client: true
   day_visited_weekend_score_value:
     default: 20
