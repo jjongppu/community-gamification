@@ -1,6 +1,7 @@
 module CommunityGamification
   class FirstLoginRewarder
-    DESCRIPTION = "first_login"
+    REASON = "first_login"
+    DESCRIPTION = "로그인"
 
     def initialize(user)
       @user = user
@@ -11,7 +12,7 @@ module CommunityGamification
       return if SiteSetting.score_day_visited_enabled
 
       today = Date.current
-      return if GamificationScoreEvent.exists?(user_id: @user.id, date: today, description: DESCRIPTION)
+      return if GamificationScoreEvent.exists?(user_id: @user.id, date: today, reason: REASON)
 
       weekend = today.saturday? || today.sunday?
       points = if weekend
@@ -25,7 +26,7 @@ module CommunityGamification
         date: today,
         points: points,
         description: DESCRIPTION,
-        reason: DESCRIPTION,
+        reason: REASON,
       )
     end
   end

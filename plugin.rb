@@ -228,18 +228,18 @@ after_initialize do
     category_id = post.topic.category_id
 
     if post.post_number == 1
-      if CommunityGamification::TopicCreated.enabled? &&
-           CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
-        CommunityGamification::GamificationScoreEvent.record!(
-          user_id: user.id,
-          date: post.created_at.to_date,
-          points: SiteSetting.topic_created_score_value,
-          reason: "topic_created",
-          description: "게시물게시",
-          related_id: post.topic_id,
-          related_type: "topic",
-        )
-      end
+      # if CommunityGamification::TopicCreated.enabled? &&
+      #      CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
+      #   CommunityGamification::GamificationScoreEvent.record!(
+      #     user_id: user.id,
+      #     date: post.created_at.to_date,
+      #     points: SiteSetting.topic_created_score_value,
+      #     reason: "topic_created",
+      #     description: "게시물게시",
+      #     related_id: post.topic_id,
+      #     related_type: "topic",
+      #   )
+      # end
     else
       if SiteSetting.score_first_reply_of_day_enabled
         already_exists = CommunityGamification::GamificationScoreEvent.exists?(
@@ -270,7 +270,7 @@ after_initialize do
         date: post.created_at.to_date,
         points: SiteSetting.post_created_event_score_value,
         reason: "post_created",
-        description: "게시물게시 2",
+        description: "게시물게시",
         related_id: post.topic_id,
         related_type: "topic",
       )
