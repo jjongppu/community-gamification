@@ -38,7 +38,6 @@ after_initialize do
   add_admin_route(
     "gamification.admin.title",
     "community-gamification",
-    { use_new_show_route: true },
   )
 
   require_relative "jobs/scheduled/update_scores_for_ten_days"
