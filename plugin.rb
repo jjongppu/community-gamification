@@ -270,7 +270,7 @@ after_initialize do
         date: post.created_at.to_date,
         points: SiteSetting.post_created_event_score_value,
         reason: "post_created",
-        description: "게시물게시",
+        description: "게시물게시 2",
         related_id: post.topic_id,
         related_type: "topic",
       )
