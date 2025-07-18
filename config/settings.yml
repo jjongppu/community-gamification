@@ -46,7 +46,7 @@ community_gamification:
     client: true
 
   first_reply_of_day_score_value:
-    default: 1
+    default: 10
     client: true
   flag_created_score_value:
     default: 10
