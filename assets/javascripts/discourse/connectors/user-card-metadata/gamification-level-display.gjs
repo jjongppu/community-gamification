@@ -30,7 +30,9 @@ export default class GamificationLevelDisplay extends Component {
           
           <div class="level-label">
             {{this.user.gamification_level_info.name}} LV.{{this.user.gamification_level_info.level}} 
-            {{this.levelProgressPercent}}%
+            {{this.levelProgressPercent}}% 
+            <div style="display: flex;justify-content: right;width: 100%">포인트 {{this.user.current_score}}</div>
+            
           </div>
           <div class="level-bar-outer">
             <div class="level-bar-inner" style={{this.levelBarStyle}}></div>
