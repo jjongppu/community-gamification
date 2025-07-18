@@ -14,20 +14,28 @@ community_gamification:
 
   like_received_score_value:
     default: 1
+    client: true
   like_given_score_value:
     default: 1
+    client: true
   solution_score_value:
     default: 5
+    client: true
   solution_topic_score_value:
     default: 2
+    client: true
   user_invited_score_value:
     default: 10
+    client: true
   time_read_score_value:
     default: 1
+    client: true
   post_read_score_value:
     default: 1
+    client: true
   topic_created_score_value:
     default: 1
+    client: true
 
   score_first_reply_of_day_enabled:
     default: true
@@ -35,37 +43,51 @@ community_gamification:
 
   post_created_score_value:
     default: 2
+    client: true
 
   first_reply_of_day_score_value:
     default: 1
+    client: true
   flag_created_score_value:
     default: 10
+    client: true
   day_visited_score_value:
     default: 1
+    client: true
   day_visited_weekend_score_value:
     default: 20
+    client: true
   score_day_visited_enabled:
     default: true
     client: true
   day_visited_score_reason:
     default: "day_visited"
+    client: true
   reaction_received_score_value:
     default: 1
+    client: true
   reaction_given_score_value:
     default: 1
+    client: true
   chat_reaction_received_score_value:
     default: 1
+    client: true
   chat_reaction_given_score_value:
     default: 1
+    client: true
   chat_message_created_score_value:
     default: 1
+    client: true
 
   post_created_event_score_value:
     default: 2
+    client: true
   accepted_solution_event_score_value:
     default: 5
+    client: true
   accepted_solution_topic_event_score_value:
     default: 2
+    client: true
 
   score_ranking_strategy:
     default: dense_rank
