@@ -13,6 +13,11 @@ Discourse::Application.routes.draw do
     get "/leaderboards/:id" => "community_gamification/admin_gamification_leaderboard#show"
   end
 
+  # Alias new plugin route for admin plugin entry
+  get "/admin/plugins/community-gamification" =>
+        "community_gamification/admin_gamification_leaderboard#index",
+      constraints: StaffConstraint.new
+
   get "/admin/plugins/gamification" =>
         "community_gamification/admin_gamification_leaderboard#index",
       :constraints => StaffConstraint.new
