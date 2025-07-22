@@ -217,9 +217,6 @@ after_initialize do
     CommunityGamification::GamificationScore.merge_scores(source_user, target_user)
   end
 
-  on(:user_logged_in) do |user|
-    CommunityGamification::FirstLoginRewarder.new(user).call
-  end
 
   on(:post_created) do |post, opts, user|
     next if post.post_type != Post.types[:regular]
