@@ -381,9 +381,7 @@ after_initialize do
       )
     end
   end
-end
-
-after_initialize do
+  
   Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
     Rails.cache.fetch("checkin:#{user.id}:#{Date.current}") do
       CommunityGamification::FirstLoginRewarder.new(user).call

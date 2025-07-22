@@ -5,29 +5,29 @@ import I18n from "I18n";
 export default {
   name: "community-gamification-check-in",
   initialize() {
-    withPluginApi("1.2.0", (api) => {
-      if (!api.getCurrentUser()) {
-        return;
-      }
+    // withPluginApi("1.2.0", (api) => {
+    //   if (!api.getCurrentUser()) {
+    //     return;
+    //   }
 
-      const performCheckIn = () => {
-        if (window.location.pathname !== "/") {
-          return;
-        }
+    //   const performCheckIn = () => {
+    //     if (window.location.pathname !== "/") {
+    //       return;
+    //     }
 
-        // controller route defined in config/routes.rb
-        ajax("/gamification/check-in.json").then((result) => {
-          if (result.points_awarded) {
-            api.addFlash(
-              I18n.t("gamification.check_in_awarded", { points: result.points }),
-              "success",
-            );
-          }
-        });
-      };
+    //     // controller route defined in config/routes.rb
+    //     ajax("/gamification/check-in.json").then((result) => {
+    //       if (result.points_awarded) {
+    //         api.addFlash(
+    //           I18n.t("gamification.check_in_awarded", { points: result.points }),
+    //           "success",
+    //         );
+    //       }
+    //     });
+    //   };
 
-      performCheckIn();
-      api.onPageChange(performCheckIn);
-    });
+    //   performCheckIn();
+    //   api.onPageChange(performCheckIn);
+    // });
   },
 };
