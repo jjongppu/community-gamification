@@ -75,6 +75,7 @@ after_initialize do
   require_relative "lib/community_gamification/user_level_serializer_extension"
 
   require_dependency 'community_gamification/level_helper'
+  require_dependency 'warden'
 
   begin
     CommunityGamification::UserLevelSerializerExtension.register!
