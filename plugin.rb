@@ -136,11 +136,8 @@ after_initialize do
           end
         end
   
-      Rails.logger.warn("[🎯 basic_user] extracted id: #{id}")
-      Rails.logger.warn("[🎯 basic_user] object=#{object.inspect}")
-  
       if id
-        Rails.logger.warn("[🎯 basic_user] id 존재함: #{id}")
+        
         progress = CommunityGamification::LevelHelper.progress_for(id)
         Rails.logger.warn("[🎯 basic_user] progress=#{progress.inspect}")
         progress
@@ -385,6 +382,8 @@ after_initialize do
 after_initialize do
   Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
     Rails.cache.fetch("checkin:#{user.id}:#{Date.current}") do
+      Rails.logger.warn("checkin id :#{user.id}")
+      Rails.logger.warn("checkin date :#{Date.current}")
       CommunityGamification::FirstLoginRewarder.new(user).call
     end
   end
