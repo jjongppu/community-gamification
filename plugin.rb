@@ -381,7 +381,13 @@ after_initialize do
   end
 
   DiscourseEvent.on(:user_seen) do |user|
-    CommunityGamification::CheckInRecorder.new(user).call
+
+    now = Time.current.in_time_zone("Asia/Seoul")      # 현재 시간 (한국 기준)
+    midnight = now.end_of_day                          # 오늘 자정 (23:59:59)
+    ttl = (midnight - now).to_i                        # 자정까지 남은 초
+    Rails.cache.fetch("checkin:#{user.id}:#{now.to_date}", expires_in: ttl.seconds) do
+      CommunityGamification::CheckInRecorder.new(user).call
+    end
   end
 
   
