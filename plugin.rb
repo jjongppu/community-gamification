@@ -72,6 +72,7 @@ after_initialize do
   require_relative "lib/community_gamification/recalculate_scores_rate_limiter"
   require_relative "lib/community_gamification/leaderboard_cached_view"
   require_relative "lib/community_gamification/first_login_rewarder"
+  require_relative "lib/community_gamification/check_in_recorder"
   require_relative "lib/community_gamification/user_level_serializer_extension"
 
   require_dependency 'community_gamification/level_helper'
@@ -379,19 +380,8 @@ after_initialize do
     end
   end
 
-  begin
-    require 'warden'
-    if defined?(Warden::Manager)
-      Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
-        Rails.cache.fetch("checkin:#{user.id}:#{Date.current}") do
-          Rails.logger.warn("checkin id :#{user.id}")
-          Rails.logger.warn("checkin date #{Date.current}")
-          CommunityGamification::FirstLoginRewarder.new(user).call
-        end
-      end
-    end
-  rescue LoadError => e
-    Rails.logger.warn("Warden not available yet: #{e.message}")
+  DiscourseEvent.on(:user_seen) do |user|
+    CommunityGamification::CheckInRecorder.new(user).call
   end
 
   
