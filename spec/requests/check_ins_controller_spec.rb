@@ -16,9 +16,13 @@ RSpec.describe CommunityGamification::CheckInsController do
     expect(response.parsed_body["points_awarded"]).to eq(false)
   end
 
-  it "does not award points when disabled" do
+  it "awards login points when daily visit disabled" do
     sign_in(user)
     SiteSetting.score_day_visited_enabled = false
+
+    post "/gamification/check-in.json"
+    expect(response.parsed_body["points_awarded"]).to eq(true)
+    expect(CommunityGamification::GamificationScoreEvent.last.reason).to eq("first_login")
 
     post "/gamification/check-in.json"
     expect(response.parsed_body["points_awarded"]).to eq(false)

@@ -10,18 +10,23 @@ export default {
         return;
       }
 
-      if (!api.container.lookup("site-settings:main").score_day_visited_enabled) {
-        return;
-      }
-
-      ajax("/gamification/check-in.json").then((result) => {
-        if (result.points_awarded) {
-          api.addFlash(
-            I18n.t("gamification.check_in_awarded", { points: result.points }),
-            "success",
-          );
+      const performCheckIn = () => {
+        if (window.location.pathname !== "/") {
+          return;
         }
-      });
+
+        ajax("/gamification/check-in.json").then((result) => {
+          if (result.points_awarded) {
+            api.addFlash(
+              I18n.t("gamification.check_in_awarded", { points: result.points }),
+              "success",
+            );
+          }
+        });
+      };
+
+      performCheckIn();
+      api.onPageChange(performCheckIn);
     });
   },
 };
