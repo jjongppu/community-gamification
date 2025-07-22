@@ -379,12 +379,18 @@ after_initialize do
       )
     end
   end
-  
-  Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
-    Rails.cache.fetch("checkin:#{user.id}:#{Date.current}") do
-      Rails.logger.warn("checkin id :#{user.id}")
-      Rails.logger.warn("checkin date #{Date.current}")
-      CommunityGamification::FirstLoginRewarder.new(user).call
+
+  if defined?(Warden::Manager)
+    Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
+      Rails.cache.fetch("checkin:#{user.id}:#{Date.current}") do
+        Rails.logger.warn("checkin id :#{user.id}")
+        Rails.logger.warn("checkin date #{Date.current}")
+        CommunityGamification::FirstLoginRewarder.new(user).call
+      end
     end
+  else
+    Rails.logger.warn("[Gamification] Warden::Manager 정의되지 않음 - 로그인 출석 훅 비활성화됨")
   end
+
+  
 end
