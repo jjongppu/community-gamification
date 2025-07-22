@@ -110,3 +110,25 @@ community_gamification:
   accepted_solution_topic_event_categories:
     type: category_list
     default: ""
+
+
+  add_point_option1_category:
+    type: category_list
+    default: ""
+  add_point_option1_point:
+    default: 10
+    client: true
+
+  add_point_option2_category:
+    type: category_list
+    default: ""
+  add_point_option2_point:
+    default: 10
+    client: true
+
+  add_point_option3_category:
+    type: category_list
+    default: ""
+  add_point_option3_point:
+    default: 10
+    client: true

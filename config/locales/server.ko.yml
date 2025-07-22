@@ -38,6 +38,12 @@ ko:
     post_created_event_categories: "새 주제 작성 시 즉시 포인트가 부여될 카테고리 목록입니다. 비워두면 모든 카테고리에 적용됩니다"
     accepted_solution_event_categories: "게시글이 채택될 때 즉시 포인트가 부여될 카테고리 목록입니다. 비워두면 모든 카테고리에 적용됩니다"
     accepted_solution_topic_event_categories: "답변을 채택한 사용자에게 포인트를 부여할 카테고리 목록입니다. 비워두면 모든 카테고리에 적용됩니다"
+    add_point_option1_category : "특별 포인트 부여 카테고리1"
+    add_point_option1_point : "특별 포인트 부여 카테고리1"
+    add_point_option2_category : "특별 포인트 부여 카테고리2"
+    add_point_option2_point : "특별 포인트 부여 점수2"
+    add_point_option3_category : "특별 포인트 부여 카테고리3"
+    add_point_option3_point : "특별 포인트 부여 점수3"
   score: "포인트"
   default_leaderboard_name: "전 세계 리더보드"
   rate_limiter:

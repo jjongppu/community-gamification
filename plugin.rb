@@ -261,18 +261,31 @@ after_initialize do
     end
 
     if post.post_number == 1 &&
-         SiteSetting.post_created_event_score_value.to_i > 0 &&
-         CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
+      SiteSetting.post_created_event_score_value.to_i > 0 &&
+      CommunityGamification.category_allowed?(category_id, SiteSetting.post_created_event_categories)
+
+      points = case category_id
+              when SiteSetting.add_point_option1_category.to_i
+                SiteSetting.add_point_option1_point
+              when SiteSetting.add_point_option2_category.to_i
+                SiteSetting.add_point_option2_point
+              when SiteSetting.add_point_option3_category.to_i
+                SiteSetting.add_point_option3_point
+              else
+                SiteSetting.post_created_event_score_value
+              end
+
       CommunityGamification::GamificationScoreEvent.record!(
         user_id: user.id,
         date: post.created_at.to_date,
-        points: SiteSetting.post_created_event_score_value,
+        points: points,
         reason: "post_created",
         description: "게시물게시",
         related_id: post.topic_id,
         related_type: "topic",
       )
     end
+
   end
   
 

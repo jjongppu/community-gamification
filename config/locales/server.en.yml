@@ -32,6 +32,12 @@ en:
     post_created_event_categories: "Categories where creating a topic will award points immediately. Leave empty to apply to all"
     accepted_solution_event_categories: "Categories where having a reply accepted will award points immediately. Leave empty to apply to all"
     accepted_solution_topic_event_categories: "Categories where marking a reply as accepted will award points to the topic author. Leave empty to apply to all"
+    add_point_option1_category : "특별 포인트 부여 카테고리1"
+    add_point_option1_point : "특별 포인트 부여 카테고리1"
+    add_point_option2_category : "특별 포인트 부여 카테고리2"
+    add_point_option2_point : "특별 포인트 부여 점수2"
+    add_point_option3_category : "특별 포인트 부여 카테고리3"
+    add_point_option3_point : "특별 포인트 부여 점수3"
   score: "Points"
   default_leaderboard_name: "Global Leaderboard"
   rate_limiter:
