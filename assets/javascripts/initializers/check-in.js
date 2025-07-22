@@ -15,7 +15,8 @@ export default {
           return;
         }
 
-        ajax("/community_gamification/check-in.json").then((result) => {
+        // controller route defined in config/routes.rb
+        ajax("/gamification/check-in.json").then((result) => {
           if (result.points_awarded) {
             api.addFlash(
               I18n.t("gamification.check_in_awarded", { points: result.points }),
