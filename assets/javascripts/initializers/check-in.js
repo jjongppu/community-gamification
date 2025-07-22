@@ -15,7 +15,7 @@ export default {
           return;
         }
 
-        ajax("/gamification/check-in.json").then((result) => {
+        ajax("/community_gamification/check-in.json").then((result) => {
           if (result.points_awarded) {
             api.addFlash(
               I18n.t("gamification.check_in_awarded", { points: result.points }),
