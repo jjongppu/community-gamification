@@ -394,13 +394,14 @@ after_initialize do
   end
 
   DiscourseEvent.on(:user_seen) do |user|
-
-    now = Time.current.in_time_zone("Asia/Seoul")      # 현재 시간 (한국 기준)
-    midnight = now.end_of_day                          # 오늘 자정 (23:59:59)
-    ttl = (midnight - now).to_i                        # 자정까지 남은 초
-    cache_key = "checkin:#{user.id}:#{now.to_date}"
+    now = Time.current
+    midnight = now.end_of_day
+    ttl = (midnight - now).to_i
+    cache_key = "checkin:#{user.id}:#{Date.current}"
+  
     Rails.logger.warn("[👀 user_seen] user_id=#{user.id}, key=#{cache_key}, ttl=#{ttl}s")
-    Rails.cache.fetch("checkin:#{user.id}:#{now.to_date}", expires_in: ttl.seconds) do
+  
+    Rails.cache.fetch(cache_key, expires_in: ttl.seconds) do
       Rails.logger.warn("[✅ 출석체크 실행됨] user_id=#{user.id}, key=#{cache_key}")
       CommunityGamification::CheckInRecorder.new(user).call
     end
