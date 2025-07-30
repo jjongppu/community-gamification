@@ -19,8 +19,8 @@ export default class extends Component {
 
     // id is used by discourse-right-sidebar-blocks theme component
     const endpoint = this.args.id
-      ? `/leaderboard/${this.args.id}`
-      : "/leaderboard";
+      ? `/point_rank/${this.args.id}`
+      : "/point_rank";
 
     ajax(endpoint, { data: { user_limit: this.args.count || 10 } }).then(
       (model) => {

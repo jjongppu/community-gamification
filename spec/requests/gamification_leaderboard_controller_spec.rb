@@ -58,7 +58,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
     it "returns users and their calculated scores" do
       CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
-      get "/leaderboard/#{leaderboard.id}.json"
+      get "/point_rank/#{leaderboard.id}.json"
       expect(response.status).to eq(200)
 
       data = response.parsed_body
@@ -68,7 +68,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
     end
 
     it "returns an in progress message when leaderboard positions are not ready" do
-      expect do get "/leaderboard/#{leaderboard.id}.json" end.to change {
+      expect do get "/point_rank/#{leaderboard.id}.json" end.to change {
         Jobs::GenerateLeaderboardPositions.jobs.size
       }.by(1)
 
@@ -78,7 +78,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
 
     it "only returns users and scores for specified date range" do
       CommunityGamification::LeaderboardCachedView.new(leaderboard_2).create
-      get "/leaderboard/#{leaderboard_2.id}.json"
+      get "/point_rank/#{leaderboard_2.id}.json"
 
       expect(response.status).to eq(200)
 
@@ -91,7 +91,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
     it "respects the user_limit parameter" do
       CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
-      get "/leaderboard/#{leaderboard.id}.json?user_limit=1"
+      get "/point_rank/#{leaderboard.id}.json?user_limit=1"
       expect(response.status).to eq(200)
 
       data = response.parsed_body
@@ -107,7 +107,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
 
       CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
-      get "/leaderboard/#{leaderboard_with_group.id}.json"
+      get "/point_rank/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(200)
 
       data = response.parsed_body
@@ -123,27 +123,27 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
       )
       CommunityGamification::LeaderboardCachedView.new(leaderboard).create
 
-      get "/leaderboard/#{leaderboard.id}.json"
+      get "/point_rank/#{leaderboard.id}.json"
       data = response.parsed_body
       expect(data["users"].map { |u| u["id"] }).to_not include(staged_user.id, anon_user.id)
     end
 
     it "does not error if visible_to_groups_ids or included_groups_ids are empty" do
       CommunityGamification::LeaderboardCachedView.new(leaderboard).create
-      get "/leaderboard/#{leaderboard.id}.json"
+      get "/point_rank/#{leaderboard.id}.json"
       expect(response.status).to eq(200)
     end
 
     it "errors if visible_to_groups_ids are present and user in not a part of a included group" do
       current_user.groups = []
-      get "/leaderboard/#{leaderboard_with_group.id}.json"
+      get "/point_rank/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(404)
     end
 
     it "displays leaderboard to users included in group within visible_to_groups_ids" do
       CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
-      get "/leaderboard/#{leaderboard_with_group.id}.json"
+      get "/point_rank/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(200)
     end
 
@@ -152,7 +152,7 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
       CommunityGamification::LeaderboardCachedView.new(leaderboard_with_group).create
 
       sign_in(current_user)
-      get "/leaderboard/#{leaderboard_with_group.id}.json"
+      get "/point_rank/#{leaderboard_with_group.id}.json"
       expect(response.status).to eq(200)
     end
 
@@ -162,13 +162,13 @@ RSpec.describe CommunityGamification::GamificationLeaderboardController do
         leaderboard_with_default_period_set_to_daily,
       ).create
 
-      get "/leaderboard/#{leaderboard.id}.json"
+      get "/point_rank/#{leaderboard.id}.json"
       regular_user_score = response.parsed_body["users"][0]["total_score"]
 
-      get "/leaderboard/#{leaderboard.id}.json?period=daily"
+      get "/point_rank/#{leaderboard.id}.json?period=daily"
       daily_user_score = response.parsed_body["users"][0]["total_score"]
 
-      get "/leaderboard/#{leaderboard_with_default_period_set_to_daily.id}.json"
+      get "/point_rank/#{leaderboard_with_default_period_set_to_daily.id}.json"
       default_user_score = response.parsed_body["users"][0]["total_score"]
 
       expect(default_user_score).to eq(daily_user_score)

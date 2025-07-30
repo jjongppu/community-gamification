@@ -6,7 +6,7 @@ export default class GamificationLeaderboardIndex extends DiscourseRoute {
   @service router;
 
   model() {
-    return ajax(`/leaderboard`)
+    return ajax(`/point_rank`)
       .then((response) => {
         return response;
       })
