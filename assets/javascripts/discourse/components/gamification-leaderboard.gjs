@@ -208,6 +208,11 @@ export default class GamificationLeaderboard extends Component {
                   </div>
                 </div>
                 <div class="winner__name">
+                  {{#if winner.gamification_level_info}}
+                    <span class="level-icon">
+                      <img src={{winner.gamification_level_info.image_url}} />
+                    </span>
+                  {{/if}}
                   {{#if this.siteSettings.prioritize_username_in_ux}}
                     {{winner.username}}
                   {{else}}
@@ -231,7 +236,14 @@ export default class GamificationLeaderboard extends Component {
           {{#if this.currentUserRanking.user}}
             <div class="user -self">
               <div class="user__rank">{{this.currentUserRanking.position}}</div>
-              <div class="user__name">{{i18n "gamification.you"}}</div>
+              <div class="user__name">
+                {{#if this.currentUserRanking.user.gamification_level_info}}
+                  <span class="level-icon-small">
+                    <img src={{this.currentUserRanking.user.gamification_level_info.image_url}} />
+                  </span>
+                {{/if}}
+                {{i18n "gamification.you"}}
+              </div>
               <div class="user__score">
                 {{#if this.site.mobileView}}
                   {{number this.currentUserRanking.user.total_score}}

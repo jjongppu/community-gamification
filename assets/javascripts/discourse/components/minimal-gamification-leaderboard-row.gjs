@@ -36,9 +36,21 @@ export default class MinimalGamificationLeaderboardRow extends Component {
         {{/if}}
 
         {{#if @rank.isCurrentUser}}
-          <span class="user__name">{{i18n "gamification.you"}}</span>
+          <span class="user__name">
+            {{#if @rank.gamification_level_info}}
+              <span class="level-icon-small">
+                <img src={{@rank.gamification_level_info.image_url}} />
+              </span>
+            {{/if}}
+            {{i18n "gamification.you"}}
+          </span>
         {{else}}
           <span class="user__name">
+            {{#if @rank.gamification_level_info}}
+              <span class="level-icon-small">
+                <img src={{@rank.gamification_level_info.image_url}} />
+              </span>
+            {{/if}}
             {{#if this.siteSettings.prioritize_username_in_ux}}
               {{@rank.username}}
             {{else}}

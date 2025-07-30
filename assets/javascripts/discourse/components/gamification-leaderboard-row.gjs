@@ -27,6 +27,11 @@ export default class GamificationLeaderboardRow extends Component {
           </span>
         {{/if}}
         <span class="user__name">
+          {{#if this.rank.gamification_level_info}}
+            <span class="level-icon-small">
+              <img src={{this.rank.gamification_level_info.image_url}} />
+            </span>
+          {{/if}}
           {{#if this.siteSettings.prioritize_username_in_ux}}
             {{this.rank.username}}
           {{else}}

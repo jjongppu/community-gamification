@@ -64,7 +64,14 @@ export default class extends Component {
       {{#if this.notTopTen}}
         <div class="user -self">
           <div class="user__rank">{{this.model.personal.position}}</div>
-          <div class="user__name">{{i18n "gamification.you"}}</div>
+          <div class="user__name">
+            {{#if this.model.personal.user.gamification_level_info}}
+              <span class="level-icon-small">
+                <img src={{this.model.personal.user.gamification_level_info.image_url}} />
+              </span>
+            {{/if}}
+            {{i18n "gamification.you"}}
+          </div>
           <div class="user__score">
             {{#if this.site.mobileView}}
               {{number this.model.personal.user.total_score}}
