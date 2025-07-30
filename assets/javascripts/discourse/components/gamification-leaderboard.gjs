@@ -59,10 +59,14 @@ export default class GamificationLeaderboard extends Component {
 
   init() {
     super.init(...arguments);
-    const default_leaderboard_period = periodString(
-      this.model.leaderboard.default_period
-    );
-    this.set("period", default_leaderboard_period);
+    if (this.model.leaderboard.period_filter_disabled) {
+      this.set("period", "all");
+    } else {
+      const default_leaderboard_period = periodString(
+        this.model.leaderboard.default_period
+      );
+      this.set("period", default_leaderboard_period);
+    }
   }
 
   @discourseComputed("model.reason")
@@ -155,15 +159,17 @@ export default class GamificationLeaderboard extends Component {
       </div>
 
       <div class="leaderboard__controls">
-        <PeriodChooser
-          @period={{this.period}}
-          @action={{this.changePeriod}}
-          @fullDay={{false}}
-          @options={{hash
-            disabled=this.model.leaderboard.period_filter_disabled
-          }}
-          class="leaderboard__period-chooser"
-        />
+        {{#unless this.model.leaderboard.period_filter_disabled}}
+          <PeriodChooser
+            @period={{this.period}}
+            @action={{this.changePeriod}}
+            @fullDay={{false}}
+            @options={{hash
+              disabled=this.model.leaderboard.period_filter_disabled
+            }}
+            class="leaderboard__period-chooser"
+          />
+        {{/unless}}
         {{#if this.currentUser.staff}}
           <a href="/admin/plugins/gamification" class="leaderboard__settings">
             {{icon "gear"}}

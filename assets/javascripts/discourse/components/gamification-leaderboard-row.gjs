@@ -21,6 +21,11 @@ export default class GamificationLeaderboardRow extends Component {
         data-user-card={{this.rank.username}}
       >
         {{avatar this.rank imageSize="large"}}
+        {{#if this.rank.gamification_level_info}}
+          <span class="level-icon-small">
+            <img src={{this.rank.gamification_level_info.image_url}} />
+          </span>
+        {{/if}}
         <span class="user__name">
           {{#if this.siteSettings.prioritize_username_in_ux}}
             {{this.rank.username}}
