@@ -29,6 +29,11 @@ export default class MinimalGamificationLeaderboardRow extends Component {
         class="user__avatar clickable"
       >
         {{avatar @rank imageSize="small"}}
+        {{#if @rank.gamification_level_info}}
+          <span class="level-icon-small">
+            <img src={{@rank.gamification_level_info.image_url}} />
+          </span>
+        {{/if}}
 
         {{#if @rank.isCurrentUser}}
           <span class="user__name">{{i18n "gamification.you"}}</span>
