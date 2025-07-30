@@ -6,7 +6,7 @@ CommunityGamification::Engine.routes.draw do
 end
 
 Discourse::Application.routes.draw do
-  mount ::CommunityGamification::Engine, at: "/leaderboard"
+  mount ::CommunityGamification::Engine, at: "/point_rank"
 
   scope "/admin/plugins/community-gamification", constraints: StaffConstraint.new do
     get "/leaderboards" => "community_gamification/admin_gamification_leaderboard#index"

@@ -105,7 +105,7 @@ export default class GamificationLeaderboard extends Component {
     this.set("loading", true);
 
     return ajax(
-      `/leaderboard/${this.model.leaderboard.id}?page=${this.page}&period=${this.period}`
+      `/point_rank/${this.model.leaderboard.id}?page=${this.page}&period=${this.period}`
     )
       .then((result) => {
         if (result.users.length === 0) {
@@ -122,7 +122,7 @@ export default class GamificationLeaderboard extends Component {
   changePeriod(period) {
     this.set("period", period);
     return ajax(
-      `/leaderboard/${this.model.leaderboard.id}?period=${this.period}`
+      `/point_rank/${this.model.leaderboard.id}?period=${this.period}`
     )
       .then((result) => {
         if (result.users.length === 0) {

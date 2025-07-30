@@ -10,7 +10,7 @@ module(
     setupRenderingTest(hooks);
 
     test("regular leaderboard endpoint", async function (assert) {
-      pretender.get("/leaderboard", () =>
+      pretender.get("/point_rank", () =>
         response({
           leaderboard: "",
           personal: "",
@@ -24,7 +24,7 @@ module(
     });
 
     test("leaderboard by id and with custom user count", async function (assert) {
-      pretender.get("/leaderboard/3", ({ queryParams }) => {
+      pretender.get("/point_rank/3", ({ queryParams }) => {
         assert.strictEqual(queryParams.user_limit, "5");
 
         return response({
