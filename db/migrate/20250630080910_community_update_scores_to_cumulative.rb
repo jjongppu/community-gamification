@@ -36,12 +36,12 @@ class CommunityUpdateScoresToCumulative < ActiveRecord::Migration[7.0]
 
     execute <<~SQL
       WITH summed AS (
-        SELECT user_id, SUM(score) AS score
+        SELECT user_id, SUM(score) AS score, SUM(point) AS point
         FROM gamification_scores
         GROUP BY 1
       )
-      INSERT INTO gamification_scores (user_id, score, date)
-      SELECT user_id, score, CURRENT_DATE FROM summed;
+      INSERT INTO gamification_scores (user_id, score, point, date)
+      SELECT user_id, score, point, CURRENT_DATE FROM summed;
     SQL
   end
 
