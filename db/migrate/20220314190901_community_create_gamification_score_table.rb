@@ -6,6 +6,7 @@ class CommunityCreateGamificationScoreTable < ActiveRecord::Migration[6.1]
         t.integer :user_id, null: false
         t.date :date, null: false
         t.integer :score, null: false
+        t.integer :point, null: false, default: 0
       end
     end
 

@@ -18,11 +18,15 @@ RSpec.describe CommunityGamification::FirstLoginRewarder do
       event = CommunityGamification::GamificationScoreEvent.find_by(user_id: user.id, description: 'first_login')
       expect(event).to be_present
       expect(event.points).to eq(5)
-      expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(5)
+      gamification_score = CommunityGamification::GamificationScore.find_by(user_id: user.id)
+      expect(gamification_score.score).to eq(5)
+      expect(gamification_score.point).to eq(5)
 
       described_class.new(user).call
       expect(CommunityGamification::GamificationScoreEvent.where(user_id: user.id, description: 'first_login').count).to eq(1)
-      expect(CommunityGamification::GamificationScore.find_by(user_id: user.id).score).to eq(5)
+      gamification_score = CommunityGamification::GamificationScore.find_by(user_id: user.id)
+      expect(gamification_score.score).to eq(5)
+      expect(gamification_score.point).to eq(5)
     end
   end
 
